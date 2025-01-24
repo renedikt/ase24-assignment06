@@ -79,7 +79,7 @@ public class UserPersistenceServiceEventSourcingImpl implements UserPersistenceS
 
             updatedUser.setName(user.getName());
 
-            eventRepository.saveAndFlush(EventEntity.updateEventOf(updatedUser, user.getId(), objectMapper));
+            eventRepository.saveAndFlush(EventEntity.updateEventOf(updatedUser, null, objectMapper));
             return updatedUser;
         }
     }

@@ -86,7 +86,7 @@ public class TaskPersistenceServiceEventSourcingImpl implements TaskPersistenceS
         if (task.getId() == null) {
             // create a new task
             task.setId(UUID.randomUUID());
-            eventRepository.saveAndFlush(EventEntity.insertEventOf(task, task.getId(), objectMapper));
+            eventRepository.saveAndFlush(EventEntity.insertEventOf(task, null, objectMapper));
             return task;
         } else {
             // update existing task
@@ -102,7 +102,7 @@ public class TaskPersistenceServiceEventSourcingImpl implements TaskPersistenceS
             updatedTask.setStatus(task.getStatus());
             updatedTask.setAssigneeId(task.getAssigneeId());
 
-            eventRepository.saveAndFlush(EventEntity.updateEventOf(updatedTask, task.getId(), objectMapper));
+            eventRepository.saveAndFlush(EventEntity.updateEventOf(updatedTask, null, objectMapper));
 
             return updatedTask;
         }
@@ -125,7 +125,7 @@ public class TaskPersistenceServiceEventSourcingImpl implements TaskPersistenceS
 
         Task deletedTask = taskEntityMapper.fromEntity(taskEntity);
 
-        eventRepository.saveAndFlush(EventEntity.deleteEventOf(deletedTask, id));
+        eventRepository.saveAndFlush(EventEntity.deleteEventOf(deletedTask, null));
 
         // check successful deletion
         if (taskRepository.existsById(id)) {
